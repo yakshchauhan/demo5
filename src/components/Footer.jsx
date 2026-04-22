@@ -45,16 +45,16 @@ export default function Footer() {
 
           <div className="footer-phones">
             <a href="tel:+12345678901" className="footer-phone-item">
-              <span className="phone-lang">(EN)</span>
-              <span className="phone-num">+1 234 567 8901</span>
+              <span className="phone-lang">(ENGLISH)</span>
+              <span className="phone-num">+91 9876543210</span>
             </a>
             <a href="tel:+442071234567" className="footer-phone-item">
-              <span className="phone-lang">(UK)</span>
-              <span className="phone-num">+44 207 123 4567</span>
+              <span className="phone-lang">(HINDI)</span>
+              <span className="phone-num">+91 9876543210</span>
             </a>
             <a href="tel:+919876543210" className="footer-phone-item">
-              <span className="phone-lang">(IN)</span>
-              <span className="phone-num">+91 987 654 3210</span>
+              <span className="phone-lang">(TELGU)</span>
+              <span className="phone-num">+91 9876543210</span>
             </a>
           </div>
 
