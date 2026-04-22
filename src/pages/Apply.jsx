@@ -7,7 +7,7 @@ import './Apply.css';
 const BRAND_STEPS = ['Company', 'Campaign', 'Budget', 'Review'];
 const CREATOR_STEPS = ['Profile', 'Audience', 'Partnership', 'Review'];
 
-const CAMPAIGN_GOALS = ['Brand Awareness', 'Product Launch', 'Lead Generation', 'Event Promotion', 'Community Building', 'Sales Conversion'];
+const CAMPAIGN_GOALS = ['Brand Awareness', 'Product Launch', 'Lead Generation', 'Event Promotion', 'Community Building', 'Sales Conversion', 'Others'];
 const LANGUAGES = ['Hindi', 'English', 'Hinglish', 'Bengali', 'Tamil', 'Telugu', 'Marathi', 'Gujarati', 'Punjabi', 'Other'];
 const FOLLOWER_RANGES = ['1K – 10K (Nano)', '10K – 50K (Micro)', '50K – 200K (Mid-tier)', '200K – 1M (Macro)', '1M+ (Mega)'];
 const CONTENT_GENRES = ['Lifestyle', 'Tech', 'Fashion', 'Food', 'Finance', 'Travel', 'Fitness', 'Gaming', 'Education', 'Comedy', 'Beauty', 'Business', 'Other'];
@@ -113,10 +113,18 @@ function BrandStep2({ data, setData }) {
         </div>
       </Field>
       <Field label="Campaign Goal">
-        <select value={data.goal || ''} onChange={e => setData({ ...data, goal: e.target.value })}>
+        <select value={data.goal || ''} onChange={e => setData({ ...data, goal: e.target.value, goalOther: '' })}>
           <option value="" disabled>Select goal</option>
           {CAMPAIGN_GOALS.map(g => <option key={g}>{g}</option>)}
         </select>
+        {data.goal === 'Others' && (
+          <input
+            style={{ marginTop: 10 }}
+            value={data.goalOther || ''}
+            onChange={e => setData({ ...data, goalOther: e.target.value })}
+            placeholder="Please describe your campaign goal"
+          />
+        )}
       </Field>
       <Field label="Target Platform">
         <div className="platform-row" style={{ marginTop: 4 }}>
@@ -139,11 +147,83 @@ function BrandStep2({ data, setData }) {
 }
 
 function BrandStep3({ data, setData }) {
+  const budgetMode = data.budgetMode || 'range';
+
+  const SLIDER_MIN = 0;
+  const SLIDER_MAX = 1000000;
+  const minVal = data.budgetMin ?? SLIDER_MIN;
+  const maxVal = data.budgetMax ?? SLIDER_MAX;
+
+  const handleMinSlider = (e) => {
+    const val = Math.min(Number(e.target.value), maxVal - 5000);
+    setData({ ...data, budgetMin: val });
+  };
+  const handleMaxSlider = (e) => {
+    const val = Math.max(Number(e.target.value), minVal + 5000);
+    setData({ ...data, budgetMax: val });
+  };
+
+  const fmt = (n) => n >= 100000 ? `₹${(n/100000).toFixed(n%100000===0?0:1)}L` : `₹${(n/1000).toFixed(0)}K`;
+
+  const minPct = ((minVal - SLIDER_MIN) / (SLIDER_MAX - SLIDER_MIN)) * 100;
+  const maxPct = ((maxVal - SLIDER_MIN) / (SLIDER_MAX - SLIDER_MIN)) * 100;
+
   return (
     <div className="field-group">
+      {/* Budget mode toggle */}
       <Field label="Campaign Budget (₹)">
-        <input value={data.budget || ''} onChange={e => setData({ ...data, budget: e.target.value })} placeholder="e.g. 50,000" />
+        <div className="budget-mode-toggle">
+          <button
+            className={`bm-btn${budgetMode === 'range' ? ' active' : ''}`}
+            onClick={() => setData({ ...data, budgetMode: 'range' })}
+            type="button"
+          >Range</button>
+          <button
+            className={`bm-btn${budgetMode === 'fixed' ? ' active' : ''}`}
+            onClick={() => setData({ ...data, budgetMode: 'fixed' })}
+            type="button"
+          >Fixed Amount</button>
+        </div>
+
+        {budgetMode === 'range' ? (
+          <div className="range-wrap">
+            <div className="range-labels">
+              <span className="range-val">{fmt(minVal)}</span>
+              <span className="range-sep">—</span>
+              <span className="range-val">{fmt(maxVal)}</span>
+            </div>
+            <div className="dual-slider">
+              <div
+                className="slider-track-fill"
+                style={{ left: `${minPct}%`, width: `${maxPct - minPct}%` }}
+              />
+              <input
+                type="range"
+                className="slider-thumb slider-min"
+                min={SLIDER_MIN} max={SLIDER_MAX} step={5000}
+                value={minVal}
+                onChange={handleMinSlider}
+              />
+              <input
+                type="range"
+                className="slider-thumb slider-max"
+                min={SLIDER_MIN} max={SLIDER_MAX} step={5000}
+                value={maxVal}
+                onChange={handleMaxSlider}
+              />
+            </div>
+            <div className="range-hint">Drag both handles to set your budget range</div>
+          </div>
+        ) : (
+          <input
+            value={data.budgetFixed || ''}
+            onChange={e => setData({ ...data, budgetFixed: e.target.value })}
+            placeholder="e.g. 75,000"
+            style={{ marginTop: 10 }}
+          />
+        )}
       </Field>
+
       <Field label="Required Follower Range">
         <div style={{ marginTop: 4 }}>
           <RadioGroup
@@ -161,7 +241,15 @@ function BrandReview({ data, onEdit }) {
   const sections = [
     { title: 'Company', step: 0, rows: [['Name', data.name], ['Company', data.company], ['Email', data.email], data.phone && ['Phone', data.phone]].filter(Boolean) },
     { title: 'Campaign', step: 1, rows: [['Languages', (data.languages || []).join(', ') || '—'], ['Goal', data.goal || '—'], ['Platform', data.platform || '—']] },
-    { title: 'Budget & Reach', step: 2, rows: [['Budget', data.budget ? `₹${data.budget}` : '—'], ['Follower Range', data.followerRange || '—']] },
+    { title: 'Budget & Reach', step: 2, rows: [
+        ['Budget', data.budgetMode === 'fixed'
+          ? (data.budgetFixed ? `₹${data.budgetFixed}` : '—')
+          : (data.budgetMin != null && data.budgetMax != null
+              ? `₹${(data.budgetMin/1000).toFixed(0)}K – ₹${data.budgetMax >= 100000 ? (data.budgetMax/100000).toFixed(1)+'L' : (data.budgetMax/1000).toFixed(0)+'K'}`
+              : '—')
+        ],
+        ['Follower Range', data.followerRange || '—']
+      ]},
   ];
   return (
     <div style={{ width: '100%' }}>
@@ -330,7 +418,10 @@ function CreatorReview({ data, onEdit }) {
 function brandStepValid(step, d) {
   if (step === 0) return d.name && d.company && d.email;
   if (step === 1) return (d.languages || []).length > 0 && d.goal && d.platform;
-  if (step === 2) return d.budget && d.followerRange;
+  if (step === 2) {
+    const budgetOk = d.budgetMode === 'fixed' ? !!d.budgetFixed : (d.budgetMin != null && d.budgetMax != null);
+    return budgetOk && d.followerRange;
+  }
   return true;
 }
 
@@ -460,7 +551,10 @@ export default function Apply() {
               <p className="confirm-msg">
                 We'll review your application within 24–48 hours.<br />Selected partners will be contacted directly.
               </p>
-              <div className="confirm-tag">
+              <button className="confirm-back-btn" onClick={() => { setScreen('gate'); setStep(0); setBrandData({}); setCreatorData({}); setAnimKey(k => k + 1); }}>
+                ← Back to Home
+              </button>
+              <div className="confirm-tag" style={{ marginTop: 20 }}>
                 <div className="confirm-dot" />
                 Under review
               </div>
