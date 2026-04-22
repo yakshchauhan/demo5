@@ -1,0 +1,189 @@
+/* ── FOOTER ── */
+.nexus-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: #050508;
+  position: relative;
+  z-index: 2;
+}
+
+.footer-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 56px;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 52px 56px 52px;
+}
+
+/* ── Left: Branding ── */
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 160px;
+}
+
+.footer-logo {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: rgba(255, 255, 255, 0.35);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: color 0.2s;
+  text-align: left;
+  width: fit-content;
+}
+
+.footer-logo:hover {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.footer-logo span {
+  color: #a855f7;
+}
+
+.footer-copy {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.25);
+  letter-spacing: 0.04em;
+  line-height: 1.7;
+}
+
+/* ── Vertical divider ── */
+.footer-divider {
+  width: 1px;
+  align-self: stretch;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(255, 255, 255, 0.1) 20%,
+    rgba(255, 255, 255, 0.1) 80%,
+    transparent
+  );
+  flex-shrink: 0;
+}
+
+/* ── Right: Contact ── */
+.footer-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  flex: 1;
+}
+
+.footer-contact-heading {
+  font-family: 'Syne', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #a855f7;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-contact-heading::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 1px;
+  background: #a855f7;
+}
+
+/* Phone numbers */
+.footer-phones {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-phone-item {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.footer-phone-item:hover .phone-num {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.phone-lang {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.25);
+  min-width: 28px;
+}
+
+.phone-num {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.55);
+  letter-spacing: 0.04em;
+  transition: color 0.2s;
+}
+
+/* ── Icon-only social buttons ── */
+.footer-socials {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.footer-social-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(255, 255, 255, 0.4);
+  text-decoration: none;
+  transition: color 0.2s, border-color 0.2s, background 0.2s, box-shadow 0.2s;
+  flex-shrink: 0;
+}
+
+.footer-social-icon:hover {
+  color: #ffffff;
+  border-color: rgba(168, 85, 247, 0.45);
+  background: rgba(168, 85, 247, 0.1);
+  box-shadow: 0 0 14px rgba(168, 85, 247, 0.18);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .footer-inner {
+    flex-direction: column;
+    gap: 32px;
+    padding: 40px 24px 100px; /* extra bottom padding so sticky CTA doesn't cover socials */
+    align-items: stretch;
+  }
+
+  .footer-divider {
+    width: 100%;
+    height: 1px;
+    align-self: auto;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.1) 30%,
+      rgba(255, 255, 255, 0.1) 70%,
+      transparent
+    );
+  }
+
+  .footer-brand {
+    align-items: flex-start;
+  }
+}
