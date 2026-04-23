@@ -120,13 +120,7 @@
   font-weight: 500;
   letter-spacing: 0.1em;
   color: rgba(255, 255, 255, 0.25);
-  min-width: 28px;
-}
-
-@media (min-width: 769px) {
-  .phone-lang {
-    min-width: 72px;
-  }
+  min-width: 72px;
 }
 
 .phone-num {
