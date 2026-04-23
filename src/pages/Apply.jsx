@@ -13,6 +13,32 @@ const FOLLOWER_RANGES = ['1K – 10K (Nano)', '10K – 50K (Micro)', '50K – 20
 const CONTENT_GENRES = ['Lifestyle', 'Tech', 'Fashion', 'Food', 'Finance', 'Travel', 'Fitness', 'Gaming', 'Education', 'Comedy', 'Beauty', 'Business', 'Other'];
 const BRAND_CATEGORIES = ['Fashion & Apparel', 'Tech & Gadgets', 'Food & Beverage', 'Health & Wellness', 'Beauty & Skincare', 'Finance & Fintech', 'Gaming', 'Education', 'Travel', 'Home & Living', 'Other'];
 
+// ─── SVG Icons ────────────────────────────────────────────────────────────────
+
+const InstagramSVG = ({ muted }) => (
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="2" y="2" width="20" height="20" rx="5.5" stroke={muted ? 'rgba(255,255,255,0.25)' : 'url(#ig-grad)'} strokeWidth="1.8"/>
+    <circle cx="12" cy="12" r="4.2" stroke={muted ? 'rgba(255,255,255,0.25)' : 'url(#ig-grad)'} strokeWidth="1.8"/>
+    <circle cx="17.3" cy="6.7" r="1" fill={muted ? 'rgba(255,255,255,0.25)' : '#e1306c'}/>
+    <defs>
+      <linearGradient id="ig-grad" x1="2" y1="22" x2="22" y2="2" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stopColor="#f09433"/>
+        <stop offset="25%" stopColor="#e6683c"/>
+        <stop offset="50%" stopColor="#dc2743"/>
+        <stop offset="75%" stopColor="#cc2366"/>
+        <stop offset="100%" stopColor="#bc1888"/>
+      </linearGradient>
+    </defs>
+  </svg>
+);
+
+const YouTubeSVG = () => (
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="2" y="5" width="20" height="14" rx="4" stroke="rgba(255,255,255,0.2)" strokeWidth="1.8"/>
+    <path d="M10 9.5l5 2.5-5 2.5V9.5z" fill="rgba(255,255,255,0.2)"/>
+  </svg>
+);
+
 // ─── Shared Sub-components ────────────────────────────────────────────────────
 
 function FadeWrap({ children, animKey }) {
@@ -113,10 +139,19 @@ function BrandStep2({ data, setData }) {
         </div>
       </Field>
       <Field label="Campaign Goal">
-        <select value={data.goal || ''} onChange={e => setData({ ...data, goal: e.target.value, goalOther: '' })}>
-          <option value="" disabled>Select goal</option>
-          {CAMPAIGN_GOALS.map(g => <option key={g}>{g}</option>)}
-        </select>
+        <div className="glass-select-wrap">
+          <select
+            className="glass-select"
+            value={data.goal || ''}
+            onChange={e => setData({ ...data, goal: e.target.value, goalOther: '' })}
+          >
+            <option value="" disabled>Select goal</option>
+            {CAMPAIGN_GOALS.map(g => <option key={g}>{g}</option>)}
+          </select>
+          <span className="glass-select-arrow">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5" strokeLinecap="round"/></svg>
+          </span>
+        </div>
         {data.goal === 'Others' && (
           <input
             style={{ marginTop: 10 }}
@@ -132,12 +167,12 @@ function BrandStep2({ data, setData }) {
             className={`platform-card${data.platform === 'Instagram' ? ' selected' : ''}`}
             onClick={() => setData({ ...data, platform: 'Instagram' })}
           >
-            <div className="p-icon">📸</div>
+            <div className="p-icon"><InstagramSVG /></div>
             <div className="p-name">Instagram</div>
           </div>
           <div className="platform-card disabled" style={{ position: 'relative' }}>
             <div className="coming-soon-tip">Coming soon</div>
-            <div className="p-icon" style={{ filter: 'grayscale(1)' }}>▶️</div>
+            <div className="p-icon"><YouTubeSVG /></div>
             <div className="p-name">YouTube</div>
           </div>
         </div>
@@ -170,7 +205,6 @@ function BrandStep3({ data, setData }) {
 
   return (
     <div className="field-group">
-      {/* Budget mode toggle */}
       <Field label="Campaign Budget (₹)">
         <div className="budget-mode-toggle">
           <button
@@ -290,12 +324,12 @@ function CreatorStep1({ data, setData }) {
             className={`platform-card${data.platform === 'Instagram' ? ' selected' : ''}`}
             onClick={() => setData({ ...data, platform: 'Instagram' })}
           >
-            <div className="p-icon">📸</div>
+            <div className="p-icon"><InstagramSVG /></div>
             <div className="p-name">Instagram</div>
           </div>
           <div className="platform-card disabled" style={{ position: 'relative' }}>
             <div className="coming-soon-tip">Not available yet</div>
-            <div className="p-icon" style={{ filter: 'grayscale(1)' }}>▶️</div>
+            <div className="p-icon"><YouTubeSVG /></div>
             <div className="p-name">YouTube</div>
           </div>
         </div>
@@ -546,15 +580,31 @@ export default function Apply() {
         {screen === 'done' && (
           <FadeWrap animKey="done">
             <div className="confirm-wrap">
-              <div className="confirm-icon">✦</div>
+              {/* Image from your assets folder — place the PNG at src/assets/handshake.png */}
+              <div className="confirm-icon">
+                <img
+                  src="/src/assets/handshake.png"
+                  alt="partnership"
+                  className="confirm-icon-img"
+                />
+              </div>
               <div className="confirm-title">Application<br />Received</div>
               <p className="confirm-msg">
                 We'll review your application within 24–48 hours.<br />Selected partners will be contacted directly.
               </p>
-              <button className="confirm-back-btn" onClick={() => { setScreen('gate'); setStep(0); setBrandData({}); setCreatorData({}); setAnimKey(k => k + 1); }}>
-                ← Back to Home
+              <button
+                className="confirm-back-btn"
+                onClick={() => {
+                  setScreen('gate');
+                  setStep(0);
+                  setBrandData({});
+                  setCreatorData({});
+                  setAnimKey(k => k + 1);
+                }}
+              >
+                ← Back
               </button>
-              <div className="confirm-tag" style={{ marginTop: 20 }}>
+              <div className="confirm-tag confirm-tag-plain">
                 <div className="confirm-dot" />
                 Under review
               </div>

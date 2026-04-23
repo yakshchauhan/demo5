@@ -132,10 +132,10 @@
   transition: color 0.2s;
 }
 
-/* ── Icon-only social buttons ── */
+/* ── Icon-only social buttons — no box ── */
 .footer-socials {
   display: flex;
-  gap: 10px;
+  gap: 16px;
   align-items: center;
 }
 
@@ -143,22 +143,20 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.03);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: none;
+  border: none;
   color: rgba(255, 255, 255, 0.4);
   text-decoration: none;
-  transition: color 0.2s, border-color 0.2s, background 0.2s, box-shadow 0.2s;
+  transition: opacity 0.2s, transform 0.2s;
   flex-shrink: 0;
 }
 
 .footer-social-icon:hover {
-  color: #ffffff;
-  border-color: rgba(168, 85, 247, 0.45);
-  background: rgba(168, 85, 247, 0.1);
-  box-shadow: 0 0 14px rgba(168, 85, 247, 0.18);
+  opacity: 0.8;
+  transform: scale(1.1);
 }
 
 /* ── Responsive ── */

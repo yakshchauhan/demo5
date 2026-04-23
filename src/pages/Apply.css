@@ -180,7 +180,8 @@
 
 /* Confirmation */
 .apply-root .confirm-wrap { text-align: center; padding: 48px 0; display: flex; flex-direction: column; align-items: center; }
-.apply-root .confirm-icon { width: 72px; height: 72px; border-radius: 50%; background: linear-gradient(135deg, rgba(124,58,237,0.2), rgba(168,85,247,0.2)); border: 1px solid rgba(168,85,247,0.3); display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 32px; animation: ap-pulseIcon 2s ease-in-out infinite; }
+.apply-root .confirm-icon { width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--purple-vivid), var(--purple-glow), var(--pink-glow)); border: 1px solid rgba(168,85,247,0.2); display: flex; align-items: center; justify-content: center; margin: 0 auto 32px; animation: ap-pulseIcon 2s ease-in-out infinite; overflow: hidden; padding: 0; }
+.apply-root .confirm-icon-img { width: 72%; height: 72%; object-fit: contain; display: block; filter: brightness(0) invert(1); }
 @keyframes ap-pulseIcon { 0%,100%{box-shadow:0 0 20px rgba(168,85,247,0.3);} 50%{box-shadow:0 0 40px rgba(168,85,247,0.5),0 0 60px rgba(236,72,153,0.2);} }
 .apply-root .confirm-title { font-family: var(--font-display); font-size: 32px; font-weight: 800; margin-bottom: 16px; background: linear-gradient(135deg, var(--white), var(--purple-glow)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 .apply-root .confirm-msg { font-size: 14px; color: var(--white-60); line-height: 1.8; max-width: 320px; margin: 0 auto 32px; font-weight: 300; }
@@ -286,3 +287,48 @@
 .apply-root .divider { width: 100%; height: 1px; background: var(--white-10); margin: 4px 0; }
 .apply-root .back-link { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--white-30); cursor: pointer; margin-bottom: 32px; transition: color 0.2s; font-weight: 400; letter-spacing: 0.05em; width: 100%; }
 .apply-root .back-link:hover { color: var(--white-60); }
+
+/* Liquid glass campaign goal select */
+.apply-root .glass-select-wrap {
+  position: relative; width: 100%; margin-top: 6px;
+}
+.apply-root .glass-select {
+  width: 100%;
+  appearance: none; -webkit-appearance: none;
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 14px 44px 14px 16px;
+  color: var(--white);
+  font-family: var(--font-body); font-size: 15px; font-weight: 300;
+  outline: none; cursor: pointer;
+  transition: border-color 0.25s, background 0.25s, box-shadow 0.25s;
+}
+.apply-root .glass-select:focus {
+  border-color: rgba(168,85,247,0.45);
+  background: rgba(168,85,247,0.04);
+  box-shadow: 0 0 0 3px rgba(168,85,247,0.07);
+}
+.apply-root .glass-select option { background: #1a0a2e; color: var(--white); }
+.apply-root .glass-select option:disabled { color: rgba(255,255,255,0.2); }
+.apply-root .glass-select-arrow {
+  position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+  pointer-events: none; display: flex; align-items: center;
+}
+
+/* Field group — slightly more gap */
+.apply-root .field-group { gap: 26px; }
+
+/* Under review — no box */
+.apply-root .confirm-tag-plain {
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+  margin-top: 18px;
+  font-size: 11px;
+  color: var(--white-30);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
