@@ -181,91 +181,172 @@ function BrandStep2({ data, setData }) {
   );
 }
 
+function FollowerCombobox({ value, onChange }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div style={{ position: 'relative', marginTop: 10 }}>
+      <div style={{ position: 'relative' }}>
+        <input
+          value={value}
+          onChange={e => onChange(e.target.value)}
+          placeholder="e.g. 50K – 200K or type custom"
+          onFocus={() => setOpen(true)}
+          onBlur={() => setTimeout(() => setOpen(false), 150)}
+          style={{ paddingRight: 40 }}
+        />
+        <div
+          onClick={() => setOpen(o => !o)}
+          style={{
+            position: 'absolute', right: 14, top: '50%', transform: 'translateY(-50%)',
+            cursor: 'pointer', color: 'rgba(255,255,255,0.4)', display: 'flex', alignItems: 'center'
+          }}
+        >
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 4l4 4 4-4" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5" strokeLinecap="round"/>
+          </svg>
+        </div>
+      </div>
+      {open && (
+        <div style={{
+          position: 'absolute', top: 'calc(100% + 6px)', left: 0, right: 0, zIndex: 100,
+          background: '#1a1a2e', border: '1px solid rgba(255,255,255,0.1)',
+          borderRadius: 12, overflow: 'hidden'
+        }}>
+          {FOLLOWER_RANGES.map(opt => (
+            <div
+              key={opt}
+              onMouseDown={() => { onChange(opt); setOpen(false); }}
+              style={{
+                padding: '12px 16px', cursor: 'pointer', fontSize: 14,
+                color: value === opt ? '#a855f7' : 'rgba(255,255,255,0.75)',
+                background: value === opt ? 'rgba(168,85,247,0.08)' : 'transparent',
+                borderBottom: '1px solid rgba(255,255,255,0.05)'
+              }}
+            >{opt}</div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+const BUDGET_PRESETS = ['₹10,000 – ₹25,000', '₹25,000 – ₹50,000', '₹50,000 – ₹1,00,000', '₹1,00,000 – ₹5,00,000', '₹5,00,000+', 'Open to discussion'];
+
+function BudgetCombobox({ value, onChange }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div style={{ position: 'relative', marginTop: 10 }}>
+      <div style={{ position: 'relative' }}>
+        <input
+          value={value}
+          onChange={e => onChange(e.target.value)}
+          placeholder="e.g. 75,000 or type custom"
+          onFocus={() => setOpen(true)}
+          onBlur={() => setTimeout(() => setOpen(false), 150)}
+          style={{ paddingRight: 40 }}
+        />
+        <div
+          onClick={() => setOpen(o => !o)}
+          style={{
+            position: 'absolute', right: 14, top: '50%', transform: 'translateY(-50%)',
+            cursor: 'pointer', color: 'rgba(255,255,255,0.4)', display: 'flex', alignItems: 'center'
+          }}
+        >
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 4l4 4 4-4" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5" strokeLinecap="round"/>
+          </svg>
+        </div>
+      </div>
+      {open && (
+        <div style={{
+          position: 'absolute', top: 'calc(100% + 6px)', left: 0, right: 0, zIndex: 100,
+          background: '#1a1a2e', border: '1px solid rgba(255,255,255,0.1)',
+          borderRadius: 12, overflow: 'hidden'
+        }}>
+          {BUDGET_PRESETS.map(opt => (
+            <div
+              key={opt}
+              onMouseDown={() => { onChange(opt); setOpen(false); }}
+              style={{
+                padding: '12px 16px', cursor: 'pointer', fontSize: 14,
+                color: value === opt ? '#a855f7' : 'rgba(255,255,255,0.75)',
+                background: value === opt ? 'rgba(168,85,247,0.08)' : 'transparent',
+                borderBottom: '1px solid rgba(255,255,255,0.05)'
+              }}
+            >{opt}</div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+const FEE_PRESETS = ['₹5,000 per post', '₹10,000 per post', '₹15,000 per post', '₹25,000 per post', '₹50,000 per post', '₹1,00,000 per post', 'Negotiable'];
+
+function FeeCombobox({ value, onChange }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div style={{ position: 'relative', marginTop: 10 }}>
+      <div style={{ position: 'relative' }}>
+        <input
+          value={value}
+          onChange={e => onChange(e.target.value)}
+          placeholder="e.g. 15,000 per post or type custom"
+          onFocus={() => setOpen(true)}
+          onBlur={() => setTimeout(() => setOpen(false), 150)}
+          style={{ paddingRight: 40 }}
+        />
+        <div
+          onClick={() => setOpen(o => !o)}
+          style={{
+            position: 'absolute', right: 14, top: '50%', transform: 'translateY(-50%)',
+            cursor: 'pointer', color: 'rgba(255,255,255,0.4)', display: 'flex', alignItems: 'center'
+          }}
+        >
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 4l4 4 4-4" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5" strokeLinecap="round"/>
+          </svg>
+        </div>
+      </div>
+      {open && (
+        <div style={{
+          position: 'absolute', top: 'calc(100% + 6px)', left: 0, right: 0, zIndex: 100,
+          background: '#1a1a2e', border: '1px solid rgba(255,255,255,0.1)',
+          borderRadius: 12, overflow: 'hidden'
+        }}>
+          {FEE_PRESETS.map(opt => (
+            <div
+              key={opt}
+              onMouseDown={() => { onChange(opt); setOpen(false); }}
+              style={{
+                padding: '12px 16px', cursor: 'pointer', fontSize: 14,
+                color: value === opt ? '#a855f7' : 'rgba(255,255,255,0.75)',
+                background: value === opt ? 'rgba(168,85,247,0.08)' : 'transparent',
+                borderBottom: '1px solid rgba(255,255,255,0.05)'
+              }}
+            >{opt}</div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function BrandStep3({ data, setData }) {
-  const budgetMode = data.budgetMode || 'range';
-
-  const SLIDER_MIN = 0;
-  const SLIDER_MAX = 1000000;
-  const minVal = data.budgetMin ?? SLIDER_MIN;
-  const maxVal = data.budgetMax ?? SLIDER_MAX;
-
-  const handleMinSlider = (e) => {
-    const val = Math.min(Number(e.target.value), maxVal - 5000);
-    setData({ ...data, budgetMin: val });
-  };
-  const handleMaxSlider = (e) => {
-    const val = Math.max(Number(e.target.value), minVal + 5000);
-    setData({ ...data, budgetMax: val });
-  };
-
-  const fmt = (n) => n >= 100000 ? `₹${(n/100000).toFixed(n%100000===0?0:1)}L` : `₹${(n/1000).toFixed(0)}K`;
-
-  const minPct = ((minVal - SLIDER_MIN) / (SLIDER_MAX - SLIDER_MIN)) * 100;
-  const maxPct = ((maxVal - SLIDER_MIN) / (SLIDER_MAX - SLIDER_MIN)) * 100;
-
   return (
     <div className="field-group">
       <Field label="Campaign Budget (₹)">
-        <div className="budget-mode-toggle">
-          <button
-            className={`bm-btn${budgetMode === 'range' ? ' active' : ''}`}
-            onClick={() => setData({ ...data, budgetMode: 'range' })}
-            type="button"
-          >Range</button>
-          <button
-            className={`bm-btn${budgetMode === 'fixed' ? ' active' : ''}`}
-            onClick={() => setData({ ...data, budgetMode: 'fixed' })}
-            type="button"
-          >Fixed Amount</button>
-        </div>
-
-        {budgetMode === 'range' ? (
-          <div className="range-wrap">
-            <div className="range-labels">
-              <span className="range-val">{fmt(minVal)}</span>
-              <span className="range-sep">—</span>
-              <span className="range-val">{fmt(maxVal)}</span>
-            </div>
-            <div className="dual-slider">
-              <div
-                className="slider-track-fill"
-                style={{ left: `${minPct}%`, width: `${maxPct - minPct}%` }}
-              />
-              <input
-                type="range"
-                className="slider-thumb slider-min"
-                min={SLIDER_MIN} max={SLIDER_MAX} step={5000}
-                value={minVal}
-                onChange={handleMinSlider}
-              />
-              <input
-                type="range"
-                className="slider-thumb slider-max"
-                min={SLIDER_MIN} max={SLIDER_MAX} step={5000}
-                value={maxVal}
-                onChange={handleMaxSlider}
-              />
-            </div>
-            <div className="range-hint">Drag both handles to set your budget range</div>
-          </div>
-        ) : (
-          <input
-            value={data.budgetFixed || ''}
-            onChange={e => setData({ ...data, budgetFixed: e.target.value })}
-            placeholder="e.g. 75,000"
-            style={{ marginTop: 10 }}
-          />
-        )}
+        <BudgetCombobox
+          value={data.budgetFixed || ''}
+          onChange={v => setData({ ...data, budgetFixed: v })}
+        />
       </Field>
 
       <Field label="Required Follower Range">
-        <div style={{ marginTop: 4 }}>
-          <RadioGroup
-            options={FOLLOWER_RANGES}
-            value={data.followerRange || ''}
-            onChange={r => setData({ ...data, followerRange: r })}
-          />
-        </div>
+        <FollowerCombobox
+          value={data.followerRange || ''}
+          onChange={r => setData({ ...data, followerRange: r })}
+        />
       </Field>
     </div>
   );
@@ -398,7 +479,10 @@ function CreatorStep3({ data, setData }) {
         </div>
       </Field>
       <Field label="Typical Collaboration Fee (₹)">
-        <input value={data.fee || ''} onChange={e => setData({ ...data, fee: e.target.value })} placeholder="e.g. 15,000 per post" />
+        <FeeCombobox
+          value={data.fee || ''}
+          onChange={v => setData({ ...data, fee: v })}
+        />
       </Field>
       <Field label="Preferred Brand Categories">
         <div style={{ marginTop: 4 }}>
@@ -453,7 +537,7 @@ function brandStepValid(step, d) {
   if (step === 0) return d.name && d.company && d.email;
   if (step === 1) return (d.languages || []).length > 0 && d.goal && d.platform;
   if (step === 2) {
-    const budgetOk = d.budgetMode === 'fixed' ? !!d.budgetFixed : (d.budgetMin != null && d.budgetMax != null);
+    const budgetOk = !!d.budgetFixed;
     return budgetOk && d.followerRange;
   }
   return true;
@@ -620,7 +704,7 @@ export default function Apply() {
             {step > 0 && <button className="btn-back" onClick={back}>←</button>}
             {!isReview
               ? <button className="btn-continue" disabled={!isValid} onClick={next}>Continue →</button>
-              : <button className="btn-submit" onClick={submit}>Submit Application ✦</button>
+              : <button className="btn-submit" onClick={submit}>Submit Application</button>
             }
           </div>
         </div>

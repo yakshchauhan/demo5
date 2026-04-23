@@ -123,6 +123,12 @@
   min-width: 28px;
 }
 
+@media (min-width: 769px) {
+  .phone-lang {
+    min-width: 72px;
+  }
+}
+
 .phone-num {
   font-family: 'DM Sans', sans-serif;
   font-size: 13px;
